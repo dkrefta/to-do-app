@@ -4,13 +4,13 @@ import logo from "./logo.svg";
 import "./App.css";
 
 class App extends Component {
-  state = { tasks: [] }
-
-  componentWillMount (){
-    const tasks = JSON.parse(window.localStorage.getItem('todoListTasks') || '[]');
+  constructor() {
+    super();
+   const tasks = JSON.parse(window.localStorage.getItem('todoListTasks') || '[]');
    this.setState({ tasks});
-
+   this.state = {tasks};
   }
+  state = { tasks: [] }
 
   updateLocalStorage = tasks => {
     const stringified = JSON.stringify(tasks);
