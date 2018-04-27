@@ -4,7 +4,23 @@ import logo from "./logo.svg";
 import "./App.css";
 
 class App extends Component {
-  state = { tasks: [] };
+  state = { tasks: [] }
+
+  componentWillMount (){
+    const tasks = JSON.parse(window.localStorage.getItem('todoListTasks') || '[]');
+   this.setState({ tasks});
+
+  }
+
+  updateLocalStorage = tasks => {
+    const stringified = JSON.stringify(tasks);
+    window.localStorage.setItem('toDoListTasks', stringified);
+  }
+
+  updateAndSave = tasks => {
+    this.updateLocalStorage(tasks);
+    this.setState({tasks});
+  }
 
   addTask = (e) => {
     e.preventDefault();
@@ -18,6 +34,7 @@ class App extends Component {
     };
     tasks = tasks.concat(newTask);
     this.setState({ tasks });
+    this.updateAndSave(tasks);
   }
   updateTask = ( target, task) => {
     let {tasks } = this.state;
