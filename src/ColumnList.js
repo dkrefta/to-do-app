@@ -3,23 +3,25 @@ import If from './If'
 import './ColumnList.css';
 
 const ColumnList = ({ tasks, columnTitle, updateTask, addTask }) => {
+  const currentTasks = tasks.filter(task => task.status ===
+    columnTitle);
   return (
   <div className="column-list">
    <h3> {columnTitle} </h3>
+
      <If test = {columnTitle === 'To Do'}>
-     <form onSubmit={addTask}>
+     <form onSubmit={e => addTask(e)}>
      <input type="text" />
-     <button type="submit"> Criar Tarefa Nova </button>
+     <button type="submit"> Criar Tarefa</button>
      </form>
      </If>
-
    <ul>
-   {tasks.map(task => (
+   {currentTasks.map(task => (
      <li key={task.id}>
      <input
      type="checkbox"
-     onChange={updateTask}
-     checked={false}
+     onChange={e => updateTask  (e.target, task)}
+     checked={columnTitle === 'Done'}
      />
      <span> {task.description}</span>
    </li>
